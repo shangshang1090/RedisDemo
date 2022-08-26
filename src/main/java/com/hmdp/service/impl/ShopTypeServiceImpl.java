@@ -54,7 +54,8 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
 
                 //5.存在，储存到redis,返回
                 for (ShopType shopType : typeList) {
-                    Map<String, Object> mm = BeanUtil.beanToMap(shopType,new HashMap<>(), CopyOptions.create().setIgnoreNullValue(true)
+                    Map<String, Object> mm = BeanUtil.beanToMap(shopType,new HashMap<>(), CopyOptions.create()
+                            .setIgnoreNullValue(true)
                             .setFieldValueEditor((fieldName,fieldValue)->fieldValue.toString()));
                     stringRedisTemplate.opsForHash().putAll(RedisConstants.SHOP_TYPE_KEY+shopType.getSort(),mm);
                 }

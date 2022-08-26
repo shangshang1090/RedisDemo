@@ -76,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //不一致报错
             return Result.fail("验证码出错误");
         }
-        //一致根据手机号查询用户O
+        //一致根据手机号查询用户O，query是ServiceImpl提供的
         User user = query().eq("phone", phone).one();
         //判断用户是否存在
         if (user == null) {
