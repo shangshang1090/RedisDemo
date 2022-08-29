@@ -60,6 +60,7 @@ public class LoginInterceptor implements HandlerInterceptor {
          stringRedisTemplate.expire(key,RedisConstants.LOGIN_USER_TTL, TimeUnit.MINUTES);
         //6.放行
 */
+
         //1.判断是否需要拦截（TreadLocal中是否有用户）
         if(UserHolder.getUser()==null){
             //设置状态码

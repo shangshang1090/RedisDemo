@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import static com.hmdp.utils.RedisConstants.CACHE_NULL_TTL;
 
 @Slf4j
-@Component
+@Component//有spring去维护
 public class CacheClient {
 
     private final StringRedisTemplate stringRedisTemplate;

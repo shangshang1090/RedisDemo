@@ -65,12 +65,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result login(LoginFormDTO loginForm, HttpSession session) {
         //校验手机号和验证码
+//        Object code2 = session.getAttribute("code");
         String phone = loginForm.getPhone();
         if (RegexUtils.isPhoneInvalid(phone)){
             return Result.fail("手机号码格式错误");
         }
         //校验验证码
-        Object code = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY+phone);
+        String code = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY+phone);
         String code1 = loginForm.getCode();
         if (code==null || !code.toString().equals(code1)) {
             //不一致报错
@@ -96,6 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String tokenString = LOGIN_USER_KEY+token;
         //设置有效期
         stringRedisTemplate.expire(tokenString,LOGIN_USER_TTL,TimeUnit.MINUTES);
+        //转成另一个对象类存储到session中，减少Tomcat的内存空间的使用，还可以避免直接返回密码等敏感信息
         // session.setAttribute("user", BeanUtil.copyProperties(user, UserDTO.class));
 
         //返回token
